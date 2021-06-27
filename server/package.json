@@ -11,6 +11,7 @@
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.12",
     "@types/express-session": "^1.17.3",
+    "@types/jsonwebtoken": "^8.5.2",
     "@types/mongoose": "^5.11.97",
     "@types/shortid": "^0.0.29",
     "bcryptjs": "^2.4.3",
