@@ -28,6 +28,10 @@ app.use(
   })
 )
 
+// Routers import
+import authRouter from './app/routers/auth.route'
+app.use('/api', authRouter)
+
 app.get('/', (req: Request, res: Response) => {
   res.sendFile(__dirname + '/public/index.html')
 })

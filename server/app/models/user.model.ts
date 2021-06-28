@@ -1,13 +1,13 @@
 import mongoose from 'mongoose'
-import shortid from 'shortid'
+import * as shortid from 'shortid'
 import { TodoDocument } from './todo.model'
 
-type UserDocument = mongoose.Document & {
-  username: string
-  password: string
-  todos: TodoDocument[]
+type UserDocument = {
+  readonly username: string
+  readonly password: string
+  readonly todos: TodoDocument[]
   uniqueId: string
-}
+} & mongoose.Document
 
 const UserSchema = new mongoose.Schema(
   {
@@ -34,9 +34,11 @@ const UserSchema = new mongoose.Schema(
   }
 )
 
-UserSchema.pre('save', async (next) => {
-  const user = this as UserDocument
-  user.uniqueId = shortid.generate()
+UserSchema.pre<UserDocument>('save', function (next) {
+  const user = this
+  if (!user.uniqueId) {
+    user.uniqueId = shortid.generate()
+  }
   next()
 })
 
