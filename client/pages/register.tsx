@@ -12,8 +12,11 @@ import {
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
 import { registerFormValidation } from '../utils/formValidation'
+import useAuth from '../store/useAuth'
 
 const RegisterPage: NextPage = () => {
+  const registerUser = useAuth((state: any) => state.registerUser)
+
   return (
     <Box m="4">
       <Box mt="10">
@@ -35,8 +38,9 @@ const RegisterPage: NextPage = () => {
             password: '',
             repassword: '',
           }}
-          onSubmit={async (values) => {
-            console.log(values)
+          onSubmit={async ({ fullname, username, password }) => {
+            const payload = { fullname, username, password }
+            registerUser(payload)
           }}
           validationSchema={registerFormValidation}
         >
@@ -106,7 +110,6 @@ const RegisterPage: NextPage = () => {
                 <Box>
                   <Button
                     isFullWidth
-                    type="submit"
                     onClick={() => handleSubmit()}
                     colorScheme="teal"
                     isLoading={isSubmitting}

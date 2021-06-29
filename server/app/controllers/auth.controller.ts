@@ -4,7 +4,7 @@ import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
 export const registerUser = async (req: Request, res: Response) => {
-  const { username, password } = req.body
+  const { username, password, fullname } = req.body
 
   try {
     const user = await User.findOne({ username })
@@ -14,10 +14,7 @@ export const registerUser = async (req: Request, res: Response) => {
     const salt = await bcryptjs.genSalt(10)
     const hashedPassword = await bcryptjs.hash(password, salt)
 
-    const newUser = new User({
-      username,
-      password: hashedPassword,
-    })
+    const newUser = new User({ fullname, username, password: hashedPassword })
 
     const response = await newUser.save()
     if (response) return res.status(200).json({ success: true, data: response, error: null })

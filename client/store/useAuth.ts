@@ -1,15 +1,28 @@
 import create from 'zustand'
-import { persist } from 'zustand/middleware'
+import { combine } from 'zustand/middleware'
 import axios from '../utils/api'
 
 const useAuth = create(
-  persist(
-    (set, get) => ({
+  combine(
+    {
       userInfo: {},
       token: '',
       errorMessage: '',
-
+    },
+    (set) => ({
       setToken: (token: string) => set(() => ({ token: token })),
+
+      registerUser: async (payload: { username: string; password: string; fullname: string }) => {
+        try {
+          await axios.post('/api/register', payload).then((response) => console.log(response))
+        } catch ({
+          response: {
+            data: { error },
+          },
+        }) {
+          console.log(error)
+        }
+      },
 
       loginCurrentUser: async (payload: { username: string; password: string }) => {
         try {
@@ -43,11 +56,7 @@ const useAuth = create(
           token: '',
         })
       },
-    }),
-    {
-      name: 'auth-storage',
-      getStorage: () => sessionStorage,
-    }
+    })
   )
 )
 

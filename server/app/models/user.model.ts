@@ -5,12 +5,17 @@ import { TodoDocument } from './todo.model'
 type UserDocument = {
   readonly username: string
   readonly password: string
+  readonly fullname: string
   readonly todos: TodoDocument[]
   uniqueId: string
 } & mongoose.Document
 
 const UserSchema = new mongoose.Schema(
   {
+    fullname: {
+      type: String,
+      required: true,
+    },
     username: {
       type: String,
       required: true,
