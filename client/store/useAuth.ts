@@ -8,19 +8,29 @@ const useAuth = create(
       userInfo: {},
       token: '',
       errorMessage: '',
+      registerStatus: '',
     },
     (set) => ({
       setToken: (token: string) => set(() => ({ token: token })),
+      clearRegisterStatus: () => set({ registerStatus: '' }),
 
       registerUser: async (payload: { username: string; password: string; fullname: string }) => {
         try {
-          await axios.post('/api/register', payload).then((response) => console.log(response))
+          const response = await axios.post('/api/register', payload)
+          if (response) {
+            set({
+              registerStatus: 'true',
+            })
+          }
         } catch ({
           response: {
             data: { error },
           },
         }) {
-          console.log(error)
+          set({
+            registerStatus: 'false',
+            errorMessage: error,
+          })
         }
       },
 
@@ -54,6 +64,8 @@ const useAuth = create(
         set({
           userInfo: {},
           token: '',
+          errorMessage: '',
+          registerStatus: '',
         })
       },
     })

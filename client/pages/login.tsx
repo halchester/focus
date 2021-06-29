@@ -24,13 +24,12 @@ import { loginFormValidation } from '../utils/formValidation'
 
 const LoginPage: NextPage = () => {
   const [showPW, setShowPW] = React.useState(false)
-  const loginCurrentUser = useAuth((state: any) => state.loginCurrentUser)
-  const logoutCurrentUser = useAuth((state: any) => state.logoutCurrentUser)
-  const token = useAuth((state: any) => state.token)
-  const errorMessage = useAuth((state: any) => state.errorMessage)
+  const loginCurrentUser = useAuth((state) => state.loginCurrentUser)
+  const logoutCurrentUser = useAuth((state) => state.logoutCurrentUser)
+  const clearRegisterStatus = useAuth((state) => state.clearRegisterStatus)
+  const token = useAuth((state) => state.token)
+  const errorMessage = useAuth((state) => state.errorMessage)
   const router = useRouter()
-
-  console.log(token)
 
   React.useEffect(() => {
     if (token && !errorMessage) {
@@ -39,6 +38,10 @@ const LoginPage: NextPage = () => {
       }, 1000)
     }
   }, [token])
+
+  React.useEffect(() => {
+    clearRegisterStatus()
+  }, [])
 
   return (
     <Box m="4">

@@ -9,13 +9,28 @@ import {
   FormControl,
   FormLabel,
   FormHelperText,
+  Alert,
+  AlertIcon,
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
 import { registerFormValidation } from '../utils/formValidation'
 import useAuth from '../store/useAuth'
+import { useRouter } from 'next/dist/client/router'
 
 const RegisterPage: NextPage = () => {
-  const registerUser = useAuth((state: any) => state.registerUser)
+  const router = useRouter()
+  const registerUser = useAuth((state) => state.registerUser)
+  const registerStatus = useAuth((state) => state.registerStatus)
+  const errorMessage = useAuth((state) => state.errorMessage)
+
+  React.useEffect(() => {
+    if (registerStatus === 'true') {
+      setTimeout(() => {
+        router.push('/login')
+      }, 2000)
+    }
+    return () => {}
+  }, [registerStatus])
 
   return (
     <Box m="4">
@@ -47,6 +62,18 @@ const RegisterPage: NextPage = () => {
           {({ values, handleChange, handleBlur, handleSubmit, isSubmitting, touched, errors }) => (
             <form onSubmit={handleSubmit}>
               <Stack spacing={4} mt={8}>
+                {registerStatus === 'true' ? (
+                  <Alert status="success" variant="solid" borderRadius="md">
+                    <AlertIcon />
+                    User successfully registered! Redirecting you to login page!
+                  </Alert>
+                ) : registerStatus === 'false' ? (
+                  <Alert status="error" variant="solid" borderRadius="md">
+                    <AlertIcon />
+                    {errorMessage}
+                  </Alert>
+                ) : null}
+
                 <Box>
                   <FormControl id="fullname">
                     <FormLabel>Full name</FormLabel>
