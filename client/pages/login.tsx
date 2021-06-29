@@ -12,11 +12,15 @@ import {
   Button,
   Alert,
   AlertIcon,
+  FormControl,
+  FormLabel,
+  FormHelperText,
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
 import { ViewOffIcon, ViewIcon } from '@chakra-ui/icons'
 import useAuth from '../store/useAuth'
 import { useRouter } from 'next/dist/client/router'
+import { loginFormValidation } from '../utils/formValidation'
 
 const LoginPage: NextPage = () => {
   const [showPW, setShowPW] = React.useState(false)
@@ -38,7 +42,7 @@ const LoginPage: NextPage = () => {
 
   return (
     <Box m="4">
-      <Button onClick={logoutCurrentUser}>asdf</Button>
+      <Button onClick={logoutCurrentUser}>for logging out</Button>
       <Box mt="6">
         <Text fontSize="2xl" fontWeight="bold" align="center">
           🎯 Focus
@@ -66,8 +70,9 @@ const LoginPage: NextPage = () => {
             const payload = { username, password }
             loginCurrentUser(payload)
           }}
+          validationSchema={loginFormValidation}
         >
-          {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+          {({ values, handleChange, handleBlur, handleSubmit, isSubmitting, errors, touched }) => (
             <form onSubmit={handleSubmit}>
               <Stack spacing={4}>
                 {token && (
@@ -83,51 +88,59 @@ const LoginPage: NextPage = () => {
                   </Alert>
                 )}
                 <Box>
-                  <Text my="2" fontWeight="semibold">
-                    Username
-                  </Text>
-                  <Input
-                    colorScheme="white"
-                    variant="filled"
-                    value={values.username}
-                    id="username"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    type="text"
-                  />
+                  <FormControl id="username">
+                    <FormLabel>Username</FormLabel>
+                    <Input
+                      colorScheme="white"
+                      variant="filled"
+                      value={values.username}
+                      id="username"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      type="text"
+                      isInvalid={Boolean(touched.username) && Boolean(errors.username)}
+                    />
+                    <FormHelperText color="red.500">
+                      {touched.username && errors.username}
+                    </FormHelperText>
+                  </FormControl>
                 </Box>
                 <Box>
-                  <Flex my="2" flexDirection="row" justifyContent="space-between">
-                    <Text fontWeight="semibold" mt="1">
-                      Password
-                    </Text>
-                    {showPW ? (
-                      <IconButton
-                        size="sm"
-                        borderRadius="md"
-                        aria-label="togglepasswordview"
-                        onClick={() => setShowPW(!showPW)}
-                        icon={<ViewOffIcon />}
-                      />
-                    ) : (
-                      <IconButton
-                        size="sm"
-                        borderRadius="md"
-                        aria-label="togglepasswordview"
-                        onClick={() => setShowPW(!showPW)}
-                        icon={<ViewIcon />}
-                      />
-                    )}
-                  </Flex>
-                  <Input
-                    colorScheme="white"
-                    variant="filled"
-                    value={values.password}
-                    id="password"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    type={showPW ? 'text' : 'password'}
-                  />
+                  <FormControl id="password">
+                    <Flex my="2" flexDirection="row" justifyContent="space-between">
+                      <FormLabel>Password</FormLabel>
+                      {showPW ? (
+                        <IconButton
+                          size="sm"
+                          borderRadius="md"
+                          aria-label="togglepasswordview"
+                          onClick={() => setShowPW(!showPW)}
+                          icon={<ViewOffIcon />}
+                        />
+                      ) : (
+                        <IconButton
+                          size="sm"
+                          borderRadius="md"
+                          aria-label="togglepasswordview"
+                          onClick={() => setShowPW(!showPW)}
+                          icon={<ViewIcon />}
+                        />
+                      )}
+                    </Flex>
+                    <Input
+                      colorScheme="white"
+                      variant="filled"
+                      value={values.password}
+                      id="password"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      type={showPW ? 'text' : 'password'}
+                      isInvalid={Boolean(touched.password) && Boolean(errors.password)}
+                    />
+                    <FormHelperText color="red.500">
+                      {touched.password && errors.password}
+                    </FormHelperText>
+                  </FormControl>
                 </Box>
                 <Box>
                   <Button
