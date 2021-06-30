@@ -17,7 +17,7 @@ export const calculateTodayTimeInterval = () => {
       ...data,
       timeInterval: 'afternoon',
     }
-  } else {
+  } else if (now.getHours() > 18) {
     data = {
       ...data,
       timeInterval: 'evening',

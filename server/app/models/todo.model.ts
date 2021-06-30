@@ -14,7 +14,7 @@ const TodoSchema = new mongoose.Schema<TodoDocument>({
     required: true,
   },
   dueDate: {
-    type: String,
+    type: Date,
   },
   done: {
     type: Boolean,
