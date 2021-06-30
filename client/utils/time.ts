@@ -7,12 +7,12 @@ export const calculateTodayTimeInterval = () => {
     min: now.getMinutes() < 10 ? `0${now.getMinutes()}` : now.getMinutes(),
   }
 
-  if (now.getHours() > 1) {
+  if (now.getHours() < 12) {
     data = {
       ...data,
       timeInterval: 'morning',
     }
-  } else if (now.getHours() > 12) {
+  } else if (now.getHours() >= 12) {
     data = {
       ...data,
       timeInterval: 'afternoon',

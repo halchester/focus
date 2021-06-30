@@ -24,15 +24,15 @@ export const TodayTime = ({ username }: IProps) => {
 
   // More UI imporvement needed
   return (
-    <Stack spacing="2" mt="4">
+    <Stack spacing="2" my="2">
       <VStack>
         <Box>
-          <Text fontSize="3xl">
+          <Text fontSize="3xl" fontWeight="semibold">
             {time.hour}:{time.min}
           </Text>
         </Box>
         <Box>
-          <Text>
+          <Text color="gray.600">
             Good {time.timeInterval}, {username}!
           </Text>
         </Box>
