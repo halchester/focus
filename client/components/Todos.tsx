@@ -39,30 +39,37 @@ import {
   FormControl,
   FormLabel,
   Button,
+  CircularProgress,
 } from '@chakra-ui/react'
-import { CheckIcon } from '@chakra-ui/icons'
+import { CheckIcon, DeleteIcon } from '@chakra-ui/icons'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import useAuth from '../store/useAuth'
+import { useMutation, useQuery } from 'react-query'
+import { addNewTodo, getAllTodos } from '../utils/query'
 
 export const Todos = () => {
-  const [date, setDate] = React.useState(new Date())
+  const [dueDate, setDueDate] = React.useState(new Date())
   const [todo, setTodo] = React.useState('')
+  const userInfo = useAuth((state: any) => state.userInfo)
+  const { data, isLoading, isError, refetch } = useQuery(['todos', userInfo], getAllTodos)
+  const { mutate } = useMutation(addNewTodo, {
+    onSuccess: () => {
+      refetch()
+    },
+    onError: (err) => {
+      console.log(err)
+    },
+    onSettled: () => {
+      refetch()
+    },
+  })
+
+  // console.log(data, isLoading)
 
   const handleDateChange = (date: any) => {
     // let dueDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
-    setDate(date)
-  }
-
-  const addTodo = () => {
-    const payload = {
-      todo,
-      dueDate: date.toString(),
-      done: false,
-      uniqueId: `${Math.random()}`,
-    }
-    todos.push(payload)
-    setTodo('')
-    setDate(new Date())
+    setDueDate(date)
   }
 
   return (
@@ -70,11 +77,17 @@ export const Todos = () => {
       <Text fontSize="lg" align="center" mb="2" fontWeight="semibold">
         Todos
       </Text>
-      {todos.map((todo, idx) => (
-        <Stack key={idx} spacing="2" my="1">
-          <Todo todo={todo} />
-        </Stack>
-      ))}
+      {isError ? (
+        <Text>Cannot fetch data :(</Text>
+      ) : isLoading ? (
+        <CircularProgress />
+      ) : (
+        data.todos.map((todo: any, idx: number) => (
+          <Stack key={idx} spacing="2" my="1">
+            <Todo todo={todo} />
+          </Stack>
+        ))
+      )}
       <Box my="2">
         <Stack spacing={2}>
           <FormControl>
@@ -91,10 +104,17 @@ export const Todos = () => {
               <DatePicker
                 onChange={(date) => handleDateChange(date)}
                 placeholderText="Select due date"
-                selected={date}
+                selected={dueDate}
               />
             </Box>
-            <Button onClick={addTodo}>Add todo</Button>
+            <Button
+              onClick={() => {
+                const payload = { userUniqueId: userInfo.uniqueId, todo, dueDate }
+                mutate(payload)
+              }}
+            >
+              Add todo
+            </Button>
           </Flex>
         </Stack>
       </Box>
@@ -123,7 +143,7 @@ const Todo = ({ todo }: ITodoProp) => {
           </Text>
         </Box>
         <Box>
-          {!todo.done ? (
+          <HStack spacing="2">
             <IconButton
               onClick={() => {
                 console.log(todo.uniqueId)
@@ -133,7 +153,16 @@ const Todo = ({ todo }: ITodoProp) => {
               aria-label="toggleTodo"
               icon={<CheckIcon />}
             />
-          ) : null}
+            <IconButton
+              borderRadius="md"
+              size="sm"
+              aria-label="deleteTodo"
+              icon={<DeleteIcon />}
+              onClick={() => {
+                console.log(todo.uniqueId)
+              }}
+            />
+          </HStack>
         </Box>
       </Flex>
     </Box>

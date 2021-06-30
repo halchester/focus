@@ -5,7 +5,7 @@ import User from '../models/user.model'
 export const getAllTodo = async (req: Request, res: Response) => {
   const { uniqueId } = req.params
   try {
-    const response = await User.findById({ uniqueId }).populate('todos')
+    const response = await User.findOne({ uniqueId }).populate('todos')
     if (response) {
       return res.status(200).json({ success: true, data: response, error: null })
     }
@@ -21,7 +21,7 @@ export const addNewTodo = async (req: Request, res: Response) => {
 
   try {
     const newTodo = new Todo(payload)
-    const response = newTodo.save()
+    const response = await newTodo.save()
 
     const userResponse = await User.updateOne(
       { uniqueId: userUniqueId },

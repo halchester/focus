@@ -30,7 +30,9 @@ app.use(
 
 // Routers import
 import authRouter from './app/routers/auth.route'
+import todoRouter from './app/routers/todo.route'
 app.use('/api', authRouter)
+app.use('/api', todoRouter)
 
 app.get('/', (req: Request, res: Response) => {
   res.sendFile(__dirname + '/public/index.html')

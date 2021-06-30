@@ -1,14 +1,14 @@
 import mongoose from 'mongoose'
-import shortid from 'shortid'
+import * as shortid from 'shortid'
 
-export type TodoDocument = mongoose.Document & {
-  todo: string
-  dueDate: string
-  done: boolean
+export type TodoDocument = {
+  readonly todo: string
+  readonly dueDate: string
+  readonly done: boolean
   uniqueId: string
-}
+} & mongoose.Document
 
-const TodoSchema = new mongoose.Schema<TodoDocument>({
+const TodoSchema = new mongoose.Schema({
   todo: {
     type: String,
     required: true,
@@ -18,16 +18,18 @@ const TodoSchema = new mongoose.Schema<TodoDocument>({
   },
   done: {
     type: Boolean,
-    default: false,
+    required: true,
   },
   uniqueId: {
     type: String,
   },
 })
 
-TodoSchema.pre('save', async (next) => {
-  const todo = this as TodoDocument
-  todo.uniqueId = shortid.generate()
+TodoSchema.pre<TodoDocument>('save', function (next) {
+  let todo = this
+  if (!todo.uniqueId) {
+    todo.uniqueId = shortid.generate()
+  }
   next()
 })
 

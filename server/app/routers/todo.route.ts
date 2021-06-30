@@ -3,7 +3,7 @@ import { addNewTodo, getAllTodo, modifyTodo, deleteNewTodo } from '../controller
 
 const todoRouter = Router()
 
-todoRouter.get('/todos', getAllTodo)
+todoRouter.get('/todos/:uniqueId', getAllTodo)
 todoRouter.post('/todo/add', addNewTodo)
 todoRouter.put('/todo/:uniqueId', modifyTodo)
 todoRouter.delete('/todo/:uniqueId', deleteNewTodo)
