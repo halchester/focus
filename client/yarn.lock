@@ -2592,6 +2592,13 @@ react-clientside-effect@^1.2.2:
   dependencies:
     "@babel/runtime" "^7.12.13"
 
+react-countdown-circle-timer@^2.5.3:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/react-countdown-circle-timer/-/react-countdown-circle-timer-2.5.3.tgz#39c9ed138fe717d00a5467a3af90f58599e45932"
+  integrity sha512-7uIopuZtR+nTWpfTpSD7aw2Ml8OxsTjI6nG5txuClUUxxnRphEkoDSo5qz8r7OYxgme7FpUHsDqueznYN3yLtg==
+  dependencies:
+    use-elapsed-time "2.1.8"
+
 react-datepicker@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-4.1.1.tgz#5ecef49c672b2250fca26327c988464e6ba52b62"
@@ -3135,6 +3142,11 @@ use-callback-ref@^1.2.1, use-callback-ref@^1.2.3:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.2.5.tgz#6115ed242cfbaed5915499c0a9842ca2912f38a5"
   integrity sha512-gN3vgMISAgacF7sqsLPByqoePooY3n2emTH59Ur5d/M8eg4WTWu1xp8i8DHjohftIyEx0S08RiYxbffr4j8Peg==
+
+use-elapsed-time@2.1.8:
+  version "2.1.8"
+  resolved "https://registry.yarnpkg.com/use-elapsed-time/-/use-elapsed-time-2.1.8.tgz#3c830ae730e2bc204f2294b66be15580f0016ea5"
+  integrity sha512-lNLTDffKHdHWweQNvnch9tFI2eRP3tXccSLrwE7U6xrfyWFNEgNQZWWsGhQvtwKa0kJ6L+7E5wKbi3jg86opjg==
 
 use-sidecar@^1.0.1:
   version "1.0.5"

@@ -74,9 +74,11 @@ export const Todos = () => {
       {isError ? (
         <Text>Cannot fetch data :(</Text>
       ) : isLoading ? (
-        <CircularProgress isIndeterminate color="green.300" />
+        <CircularProgress isIndeterminate color="green.300" my="2" />
       ) : data.todos.length === 0 ? (
-        <Text>You don't have any todos :)</Text>
+        <Text my="2" align="center" color="gray.700" fontSize="lg">
+          You don't have any todos :D
+        </Text>
       ) : (
         data.todos.map((todo: any, idx: number) => (
           <Stack key={idx} spacing="2" my="1">

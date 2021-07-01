@@ -26,3 +26,15 @@ export const calculateTodayTimeInterval = () => {
 
   return data
 }
+
+export const calculateBreakTime = (studyingTime: number) =>
+  Math.round(studyingTime * 1.2 - studyingTime)
+
+const minuteSeconds = 60
+const hourSeconds = 3600
+const daySeconds = 86400
+
+export const getTimeSeconds = (time: number) => (minuteSeconds - time) | 0
+export const getTimeMinutes = (time: number) => ((time % hourSeconds) / minuteSeconds) | 0
+export const getTimeHours = (time: number) => ((time % daySeconds) / hourSeconds) | 0
+export const getTimeDays = (time: number) => (time / daySeconds) | 0
