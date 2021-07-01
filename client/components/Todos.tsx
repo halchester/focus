@@ -1,38 +1,9 @@
-let todos = [
-  {
-    uniqueId: '1',
-    todo: 'eat shit',
-    dueDate: '',
-    done: false,
-  },
-  {
-    uniqueId: '2',
-    todo: 'eat shit',
-    dueDate: '203.232332,23',
-    done: false,
-  },
-  {
-    uniqueId: '3',
-    todo: 'eat shit',
-    dueDate: '',
-    done: false,
-  },
-  {
-    uniqueId: '4',
-    todo: 'eat shit',
-    dueDate: '23.2342',
-    done: false,
-  },
-]
-
 import React from 'react'
 import {
   Box,
   Text,
   HStack,
   Stack,
-  VStack,
-  Icon,
   IconButton,
   Flex,
   Input,
@@ -40,6 +11,7 @@ import {
   FormLabel,
   Button,
   CircularProgress,
+  useToast,
 } from '@chakra-ui/react'
 import { CheckIcon, DeleteIcon } from '@chakra-ui/icons'
 import DatePicker from 'react-datepicker'
@@ -47,28 +19,38 @@ import 'react-datepicker/dist/react-datepicker.css'
 import useAuth from '../store/useAuth'
 import { useMutation, useQuery } from 'react-query'
 import { addNewTodo, getAllTodos } from '../utils/query'
+import moment from 'moment'
+import axios from '../utils/api'
 
 export const Todos = () => {
   const [dueDate, setDueDate] = React.useState(new Date())
   const [todo, setTodo] = React.useState('')
+  const toast = useToast()
   const userInfo = useAuth((state: any) => state.userInfo)
   const { data, isLoading, isError, refetch } = useQuery(['todos', userInfo], getAllTodos)
   const { mutate } = useMutation(addNewTodo, {
     onSuccess: () => {
+      toast({
+        title: 'Todo added!',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+      })
       refetch()
+      setTodo('')
+      setDueDate(new Date())
     },
-    onError: (err) => {
-      console.log(err)
-    },
-    onSettled: () => {
-      refetch()
+    onError: () => {
+      toast({
+        title: 'Oh no! Something went wrong :(',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+      })
     },
   })
 
-  // console.log(data, isLoading)
-
   const handleDateChange = (date: any) => {
-    // let dueDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
     setDueDate(date)
   }
 
@@ -80,11 +62,11 @@ export const Todos = () => {
       {isError ? (
         <Text>Cannot fetch data :(</Text>
       ) : isLoading ? (
-        <CircularProgress />
+        <CircularProgress isIndeterminate color="green.300" />
       ) : (
         data.todos.map((todo: any, idx: number) => (
           <Stack key={idx} spacing="2" my="1">
-            <Todo todo={todo} />
+            <Todo todo={todo} refetch={refetch} />
           </Stack>
         ))
       )}
@@ -130,23 +112,49 @@ interface ITodo {
 }
 interface ITodoProp {
   todo: ITodo
+  refetch: () => void
 }
 
-const Todo = ({ todo }: ITodoProp) => {
+const Todo = ({ todo, refetch }: ITodoProp) => {
+  const toggleTodoDone = (uniqueId: string, payload: ITodo) => {
+    axios
+      .put(`/api/todo/${uniqueId}`, payload)
+      .then(() => {
+        refetch()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const deleteTodo = (uniqueId: string) => {
+    axios
+      .delete(`/api/todo/${uniqueId}`)
+      .then(() => {
+        refetch()
+      })
+      .catch((err) => console.log(err))
+  }
+
   return (
-    <Box bg="gray.200" p="2" borderRadius="md">
+    <Box bg={todo.done ? 'green.200' : 'gray.200'} p="2" borderRadius="md">
       <Flex flexDirection="row" alignItems="center" justifyContent="space-between">
         <Box>
-          <Text fontSize="md">{todo.todo}</Text>
+          <Text fontSize="md" textDecoration={todo.done ? 'line-through' : ''}>
+            {todo.todo}
+          </Text>
           <Text color="gray.500" fontSize="sm">
-            Due date : {todo.dueDate}
+            Due date : <strong>{moment(todo.dueDate).format('DD-MM-YYYY')}</strong>
           </Text>
         </Box>
         <Box>
           <HStack spacing="2">
             <IconButton
               onClick={() => {
-                console.log(todo.uniqueId)
+                toggleTodoDone(todo.uniqueId, {
+                  ...todo,
+                  done: !todo.done,
+                })
               }}
               borderRadius="md"
               size="sm"
@@ -159,7 +167,7 @@ const Todo = ({ todo }: ITodoProp) => {
               aria-label="deleteTodo"
               icon={<DeleteIcon />}
               onClick={() => {
-                console.log(todo.uniqueId)
+                deleteTodo(todo.uniqueId)
               }}
             />
           </HStack>

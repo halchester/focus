@@ -45,10 +45,9 @@ export const deleteNewTodo = async (req: Request, res: Response) => {
   const { uniqueId } = req.params
 
   try {
-    const response = Todo.findByIdAndDelete({ uniqueId })
-    if (response) {
+    await Todo.findOneAndDelete({ uniqueId }).then((response) => {
       return res.status(200).json({ succcess: true, data: response, error: null })
-    }
+    })
   } catch (err) {
     console.log(err)
     return res.status(400).json({ success: false, data: {}, error: err })
@@ -59,18 +58,14 @@ export const modifyTodo = async (req: Request, res: Response) => {
   const { uniqueId } = req.params
 
   try {
-    const response = Todo.updateOne(
+    await Todo.updateOne(
       { uniqueId },
       {
         $set: { ...req.body },
-      },
-      {
-        new: true,
       }
-    )
-    if (response) {
+    ).then((response) => {
       return res.status(200).json({ success: true, data: response, error: null })
-    }
+    })
   } catch (err) {
     console.log(err)
     return res.status(400).json({ success: false, data: {}, error: err })
