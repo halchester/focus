@@ -4,6 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { Layout } from '../components/Layout'
 import { queryClient } from '../utils/query'
 import { QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -11,6 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <Layout>
           <Component {...pageProps} />
+          <ReactQueryDevtools initialIsOpen={false} />
         </Layout>
       </QueryClientProvider>
     </ChakraProvider>
