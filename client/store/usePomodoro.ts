@@ -2,13 +2,13 @@ import create from 'zustand'
 
 export const usePomodoro = create((set) => ({
   selectedTypeRadio: 'study',
-  timeSettings: {
-    study: 30,
-    shortBreak: 5,
-    longBreak: 15,
-  },
-
   setSelectedTypeRadio: (type: string) => set((state) => ({ selectedTypeRadio: type })),
-  setTimeSettings: (payload: { study: number; shortBreak: number; longBreak: number }) =>
+
+  timeSettings: {
+    study: 0,
+    'short break': 0,
+    'long break': 0,
+  },
+  setTimeSettings: (payload: { study: number; 'short break': number; 'long break': number }) =>
     set((state) => ({ timeSettings: payload })),
 }))

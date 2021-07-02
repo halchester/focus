@@ -25,8 +25,8 @@ export const TimeSettings = () => {
   const setTimeSettings = usePomodoro((state: any) => state.setTimeSettings)
   const [formValues, setFormValues] = React.useState({
     study: 0,
-    shortBreak: 0,
-    longBreak: 0,
+    'short break': 0,
+    'long break': 0,
   })
 
   return (
@@ -65,12 +65,12 @@ export const TimeSettings = () => {
               </Text>
               <Input
                 width="50"
-                value={formValues.shortBreak}
+                value={formValues['short break']}
                 type="number"
                 onChange={(e: any) => {
                   setFormValues({
                     ...formValues,
-                    shortBreak: e.target.value,
+                    'short break': e.target.value,
                   })
                 }}
               />
@@ -81,12 +81,12 @@ export const TimeSettings = () => {
               </Text>
               <Input
                 width="50"
-                value={formValues.longBreak}
+                value={formValues['long break']}
                 type="number"
                 onChange={(e: any) => {
                   setFormValues({
                     ...formValues,
-                    longBreak: e.target.value,
+                    'long break': e.target.value,
                   })
                 }}
               />
@@ -99,7 +99,7 @@ export const TimeSettings = () => {
             <Button
               variant="ghost"
               onClick={() => {
-                setTimeSettings()
+                setTimeSettings(formValues)
                 toast({
                   title: 'Time settings saved!',
                   status: 'success',
