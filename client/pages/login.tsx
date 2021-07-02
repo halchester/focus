@@ -25,7 +25,6 @@ import { loginFormValidation } from '../utils/formValidation'
 const LoginPage: NextPage = () => {
   const [showPW, setShowPW] = React.useState(false)
   const loginCurrentUser = useAuth((state) => state.loginCurrentUser)
-  const logoutCurrentUser = useAuth((state) => state.logoutCurrentUser)
   const clearRegisterStatus = useAuth((state) => state.clearRegisterStatus)
   const token = useAuth((state) => state.token)
   const errorMessage = useAuth((state) => state.errorMessage)
@@ -45,11 +44,8 @@ const LoginPage: NextPage = () => {
 
   return (
     <Box m="4">
-      <Button onClick={logoutCurrentUser}>for logging out</Button>
       <Box mt="6">
-        <Text fontSize="2xl" fontWeight="bold" align="center">
-          🎯 Focus
-        </Text>
+        <Box mx="auto" as="img" src="/focus-title.png" style={{ height: '8rem' }}></Box>
       </Box>
       <Box mt="10">
         <Text fontSize="3xl" fontWeight="bold" align="center">

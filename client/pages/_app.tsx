@@ -5,14 +5,20 @@ import { Layout } from '../components/Layout'
 import { queryClient } from '../utils/query'
 import { QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import Head from 'next/head'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
+      <Head>
+        <title>Focus</title>
+        <meta name="description" content="Your best studying mate!" />
+        <link rel="icon" type="image/png" href="/focus.png" />
+      </Head>
       <QueryClientProvider client={queryClient}>
         <Layout>
           <Component {...pageProps} />
-          <ReactQueryDevtools initialIsOpen={false} />
+          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         </Layout>
       </QueryClientProvider>
     </ChakraProvider>
