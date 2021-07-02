@@ -81,7 +81,7 @@ export const Todos = () => {
         </Text>
       ) : (
         data.todos.map((todo: any, idx: number) => (
-          <Stack key={idx} spacing="2" my="1">
+          <Stack key={idx} spacing="4" my="1">
             <Todo todo={todo} refetch={refetch} />
           </Stack>
         ))
