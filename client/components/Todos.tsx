@@ -71,6 +71,9 @@ export const Todos = () => {
       <Text fontSize="lg" align="center" mb="2" fontWeight="semibold">
         Todos
       </Text>
+      <Button onClick={onOpen} isFullWidth size="sm" colorScheme="teal">
+        Add new Todo!
+      </Button>
       {isError ? (
         <Text>Cannot fetch data :(</Text>
       ) : isLoading ? (
@@ -86,9 +89,6 @@ export const Todos = () => {
           </Stack>
         ))
       )}
-      <Button onClick={onOpen} isFullWidth size="sm" colorScheme="teal">
-        Add new Todo!
-      </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/dist/client/router'
 import React, { useEffect } from 'react'
 import useAuth from '../store/useAuth'
-import { Box, Flex, SimpleGrid } from '@chakra-ui/react'
+import { Box, SimpleGrid } from '@chakra-ui/react'
 import { TodayTime } from '../components/TodayTime'
 import { Todos } from '../components/Todos'
 import { Timer } from '../components/Timer'
@@ -21,7 +21,7 @@ const IndexPage: NextPage = () => {
   return (
     <Box>
       <TodayTime username={userInfo.username} />
-      <SimpleGrid columns={2} spacing={10}>
+      <SimpleGrid columns={[1, 1, 2, 2]} spacing={10}>
         <Todos />
         <Timer />
       </SimpleGrid>

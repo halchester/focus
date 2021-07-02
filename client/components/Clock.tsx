@@ -1,7 +1,6 @@
-import { Box, Text, Center, Stack, HStack, Button, VStack } from '@chakra-ui/react'
-import React, { useState, useEffect } from 'react'
+import { Center } from '@chakra-ui/react'
+import React from 'react'
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
-import { usePomodoro } from '../store/usePomodoro'
 
 interface IClockProps {
   timer: number

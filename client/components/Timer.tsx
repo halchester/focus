@@ -1,4 +1,4 @@
-import { Stack, Text, Box, Center, Button } from '@chakra-ui/react'
+import { Text, Box, Center, Button } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { CustomRadios } from './CustomRadios'
 import { usePomodoro } from '../store/usePomodoro'
