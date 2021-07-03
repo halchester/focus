@@ -144,11 +144,11 @@ const LoginPage: NextPage = () => {
                 <Box>
                   <Button
                     isFullWidth
-                    type="submit"
                     onClick={() => handleSubmit()}
                     colorScheme="teal"
-                    isLoading={isSubmitting}
                     variant="solid"
+                    aria-label="login"
+                    isLoading={isSubmitting}
                   >
                     Continue
                   </Button>
