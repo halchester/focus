@@ -2,7 +2,7 @@ import { Box, HStack, useRadio, useRadioGroup } from '@chakra-ui/react'
 import React from 'react'
 import { usePomodoro } from '../store/usePomodoro'
 
-function RadioCard(props: any) {
+function RadioCard(props: any): JSX.Element {
   const { getInputProps, getCheckboxProps } = useRadio(props)
 
   const input = getInputProps()

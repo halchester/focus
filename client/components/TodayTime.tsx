@@ -12,11 +12,11 @@ interface ITime {
   min: number
 }
 
-export const TodayTime = ({ username }: IProps) => {
+export const TodayTime = ({ username }: IProps): JSX.Element => {
   const [time, setTime] = useState<Partial<ITime>>(calculateTodayTimeInterval())
 
   useEffect(() => {
-    let timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       setTime(calculateTodayTimeInterval())
     }, 1000 * 60)
     return () => clearTimeout(timer)

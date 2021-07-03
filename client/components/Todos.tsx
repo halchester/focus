@@ -26,7 +26,7 @@ import { useMutation, useQuery } from 'react-query'
 import { addNewTodo, getAllTodos } from '../utils/query'
 import { Todo } from './Todo'
 
-export const Todos = () => {
+export const Todos = (): JSX.Element => {
   const [dueDate, setDueDate] = React.useState(new Date())
   const [todo, setTodo] = React.useState('')
   const toast = useToast()
@@ -80,7 +80,7 @@ export const Todos = () => {
         <CircularProgress isIndeterminate color="green.300" my="2" />
       ) : data.todos.length === 0 ? (
         <Text my="2" align="center" color="gray.700" fontSize="lg">
-          You don't have any todos :D
+          You don&apos;t have any todos :D
         </Text>
       ) : (
         data.todos.map((todo: any, idx: number) => (

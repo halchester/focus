@@ -1,16 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { NextPage } from 'next'
 import { useRouter } from 'next/dist/client/router'
 import React, { useEffect } from 'react'
 import useAuth from '../store/useAuth'
-import { Box, Button, SimpleGrid } from '@chakra-ui/react'
+import { Box, SimpleGrid } from '@chakra-ui/react'
 import { TodayTime } from '../components/TodayTime'
 import { Todos } from '../components/Todos'
 import { Timer } from '../components/Timer'
 
 const IndexPage: NextPage = () => {
   const router = useRouter()
-  let token = useAuth((state) => state.token)
-  let userInfo = useAuth((state: any) => state.userInfo)
+  const token = useAuth((state) => state.token)
+  const userInfo = useAuth((state: any) => state.userInfo)
 
   useEffect(() => {
     if (!token) {

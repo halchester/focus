@@ -5,7 +5,7 @@ import { usePomodoro } from '../store/usePomodoro'
 import { TimeSettings } from './TimeSettings'
 import { Clock } from './Clock'
 
-export const Timer = () => {
+export const Timer = (): JSX.Element => {
   const selectedTypeRadio = usePomodoro((state: any) => state.selectedTypeRadio)
   const timeSettings = usePomodoro((state: any) => state.timeSettings)
   const [start, setStart] = useState(false)
@@ -39,7 +39,9 @@ export const Timer = () => {
       <TimeSettings />
       {timeSettings.study !== 0 ? (
         <>
-          <Clock timer={timer} animate={start} children={children} />
+          <Clock timer={timer} animate={start}>
+            {children}
+          </Clock>
           <Center>
             <Button onClick={() => setStart(!start)}>{start ? 'Stop' : 'Start'}</Button>
           </Center>

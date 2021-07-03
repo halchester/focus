@@ -15,7 +15,7 @@ interface ITodoProp {
   refetch: () => void
 }
 
-export const Todo = ({ todo, refetch }: ITodoProp) => {
+export const Todo = ({ todo, refetch }: ITodoProp): JSX.Element => {
   const [loading, setLoading] = useState(false)
   const toggleTodoDone = (uniqueId: string, payload: ITodo) => {
     setLoading(true)

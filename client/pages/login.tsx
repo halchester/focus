@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react'
 import { NextPage } from 'next'
 import {
   Box,
   Text,
   Link,
-  Image,
   Input,
   Stack,
   Flex,
@@ -52,7 +52,7 @@ const LoginPage: NextPage = () => {
           Log in to your account!
         </Text>
         <Text fontSize="md" align="center" my="2">
-          Doesn't have an account?
+          Doesn&apos;t have an account?
           <Link href="/register" color="blue.500">
             {' '}
             Register a new one!

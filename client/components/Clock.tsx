@@ -8,7 +8,7 @@ interface IClockProps {
   children: React.ReactNode
 }
 
-export const Clock = ({ timer, animate, children }: IClockProps) => {
+export const Clock = ({ timer, animate, children }: IClockProps): JSX.Element => {
   return (
     <>
       <Center my="10">

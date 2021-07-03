@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react'
 import { NextPage } from 'next'
 import {
@@ -29,14 +30,17 @@ const RegisterPage: NextPage = () => {
         router.push('/login')
       }, 2000)
     }
-    return () => {}
   }, [registerStatus])
 
   return (
     <Box m="4">
       <Box mt="10">
         <Text fontSize="2xl" fontWeight="bold" align="center">
-          Welcome to 🎯 Focus
+          Welcome to{' '}
+          <span role="img" aria-label="emoji">
+            🎯
+          </span>{' '}
+          Focus
         </Text>
         <Text align="center" fontSize="lg">
           Your best studying mate!

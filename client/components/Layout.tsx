@@ -5,6 +5,6 @@ type IProps = {
   children: React.ReactNode
 }
 
-export const Layout = ({ children }: IProps) => {
+export const Layout = ({ children }: IProps): JSX.Element => {
   return <Box>{children}</Box>
 }

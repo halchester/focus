@@ -4,10 +4,9 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { Layout } from '../components/Layout'
 import { queryClient } from '../utils/query'
 import { QueryClientProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
 import Head from 'next/head'
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ChakraProvider theme={theme}>
       <Head>

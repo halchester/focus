@@ -14,14 +14,12 @@ import {
   Center,
   Input,
   Flex,
-  InputRightElement,
   useToast,
 } from '@chakra-ui/react'
 
-export const TimeSettings = () => {
+export const TimeSettings = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
-  const timeSettings = usePomodoro((state: any) => state.timeSettings)
   const setTimeSettings = usePomodoro((state: any) => state.setTimeSettings)
   const [formValues, setFormValues] = React.useState({
     study: 0,
