@@ -3,21 +3,16 @@ import axios from '../utils/api'
 import { Box, Flex, HStack, IconButton, Text } from '@chakra-ui/react'
 import moment from 'moment'
 import { CheckIcon, DeleteIcon } from '@chakra-ui/icons'
+import { Todo as TodoT } from '../types/index'
 
-interface ITodo {
-  todo: string
-  dueDate: Date | string
-  done: boolean
-  uniqueId: string
-}
-interface ITodoProp {
-  todo: ITodo
+interface ITodoProps {
+  todo: TodoT
   refetch: () => void
 }
 
-export const Todo = ({ todo, refetch }: ITodoProp): JSX.Element => {
+export const Todo = ({ todo, refetch }: ITodoProps): JSX.Element => {
   const [loading, setLoading] = useState(false)
-  const toggleTodoDone = (uniqueId: string, payload: ITodo) => {
+  const toggleTodoDone = (uniqueId: string, payload: TodoT) => {
     setLoading(true)
     axios
       .put(`/api/todo/${uniqueId}`, payload)
